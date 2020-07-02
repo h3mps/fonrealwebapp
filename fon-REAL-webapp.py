@@ -14,8 +14,6 @@ def importdata():
 # call function to import the data
 df = importdata()
 
-st.title("Canadian Public Revenues and Expenditures Data")
-
 ############### Part II: Inputs ###############
 # Inputs: Normalization, Item, Province
 # Once selection made, filter data so that it just includes these things
@@ -36,7 +34,7 @@ data = data[mask_items]
 # Provinces
 PROVS = list(data['provname'].unique())
 PROVABBS = list(data['provabb'].unique())
-PROVS_SELECTED = st.multiselect('Select Provinces', PROVS, default=["Canada"])
+PROVS_SELECTED = st.multiselect('Select Government', PROVS, default=["Canada"])
 mask_provs = data['provname'].isin(PROVS_SELECTED)
 data = data[mask_provs]
 
@@ -86,16 +84,21 @@ fig = addlines(fig)
 
 ############### Part V: Format Figure Layout ###############
 # axes
-if NORM_SELECTED == 'Percent of GDP' or NORM_SELECTED == 'Percent of total revenue':
-    fig.update_yaxes(title_text='Percent (%)')
-if NORM_SELECTED == 'Real per capita dollars':
-    fig.update_yaxes(title_text='Dollars')
-
+fig.update_yaxes(title_text=NORM_SELECTED)
 fig.update_xaxes(title_text='Year')
+
+# title
+if len(ITEMS_SELECTED) == 1 and len(PROVS_SELECTED) == 1:
+    fig.update_layout(title="Government REAL Data <br>" + ITEMS_SELECTED[0] + ' for ' + PROVS_SELECTED[0])
+if len(ITEMS_SELECTED) == 1 and len(PROVS_SELECTED) > 1:
+    fig.update_layout(title="Government REAL Data <br>" + ITEMS_SELECTED[0] + ' for Selected Governments')
+if len(ITEMS_SELECTED) > 1 and len(PROVS_SELECTED) == 1:
+    fig.update_layout(title="Government REAL Data <br>" + 'Selected Items for ' + PROVS_SELECTED[0])
+if len(ITEMS_SELECTED) > 1 and len(PROVS_SELECTED) > 1:
+    fig.update_layout(title="Government REAL Data <br>" + 'Selected Items for Selected Governments')
 
 # elements of figure: title, template, grid, size
 fig.update_layout(
-    title = NORM_SELECTED + " Over Time",
     template = "simple_white",
     legend_title_text='',
     height=600,
