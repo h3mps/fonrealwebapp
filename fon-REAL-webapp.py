@@ -62,16 +62,16 @@ def addlines(fig):
             datalpi = datalpp[datalpp['fonitem'].isin([i])]
             if len(ITEMS_SELECTED) == 1:
                 fig.add_trace(go.Scatter(x=datalpi['date'], y=datalpi['val'], mode='lines', line=dict(color=provcol, width=2),
-                                        customdata=datalpi[['provname', 'fonitem', 'normalization']], name= provabb +', '+ i,
-                                        hovertemplate = "Prov: %{customdata[0]} <br>Item: %{customdata[1]} <br>Unit: %{customdata[2]} <br>Year: %{x}<extra></extra>",
+                                        customdata=datalpi[['provname', 'fonitem']], name= provabb +', '+ i,
+                                        hovertemplate = "Prov: %{customdata[0]} <br>Item: %{customdata[1]} <br>Value: %{y} <br>Year: %{x}<extra></extra>",
                                         hoverlabel=dict(font_color=provfontcol)))
             else:
                 colindxi2 = ITEMS_SELECTED.index(i)
                 itemmark = itemmarkerlist[colindxi2]
                 fig.add_trace(go.Scatter(x=datalpi['date'], y=datalpi['val'], mode='lines+markers',
                                  line=dict(color=provcol, width=1.5), marker=dict(symbol=itemmark, size=8),
-                                         customdata=datalpi[['provname', 'fonitem', 'normalization']], name=provabb + ', ' + i,
-                                         hovertemplate="Prov: %{customdata[0]} <br>Item: %{customdata[1]} <br>Unit: %{customdata[2]} <br>Year: %{x}<extra></extra>",
+                                         customdata=datalpi[['provname', 'fonitem']], name=provabb + ', ' + i,
+                                         hovertemplate="Prov: %{customdata[0]} <br>Item: %{customdata[1]} <br>Value: %{y} <br>Year: %{x}<extra></extra>",
                                         hoverlabel=dict(font_color=provfontcol)))
 
     return fig
