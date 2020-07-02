@@ -14,6 +14,8 @@ def importdata():
 # call function to import the data
 df = importdata()
 
+st.title("Canadian Public Revenues and Expenditures Data")
+
 ############### Part II: Inputs ###############
 # Inputs: Normalization, Item, Province
 # Once selection made, filter data so that it just includes these things
@@ -84,11 +86,16 @@ fig = addlines(fig)
 
 ############### Part V: Format Figure Layout ###############
 # axes
-fig.update_yaxes(title_text='TBD')
+if NORM_SELECTED == 'Percent of GDP' or NORM_SELECTED == 'Percent of total revenue':
+    fig.update_yaxes(title_text='Percent (%)')
+if NORM_SELECTED == 'Real per capita dollars':
+    fig.update_yaxes(title_text='Dollars')
+
+fig.update_xaxes(title_text='Year')
 
 # elements of figure: title, template, grid, size
 fig.update_layout(
-    title = 'Sample Title',
+    title = NORM_SELECTED + " Over Time",
     template = "simple_white",
     legend_title_text='',
     height=600,
@@ -96,7 +103,7 @@ fig.update_layout(
     yaxis=dict(rangemode='tozero', showgrid=True, zeroline=True),
     xaxis=dict(showgrid=True),
     showlegend=True,
-    legend=dict(x=1, y=0.5),
+    legend=dict(x=0, y=-0.5),
     hoverlabel=dict(
         font_size=14,
     )
@@ -106,9 +113,9 @@ fig.update_layout(
 fig.layout.images = [dict(
     source="https://raw.githubusercontent.com/h3mps/t1webapp/master/fon-icon.png",
     xref="paper", yref="paper",
-    x=1, y=0,
+    x=1, y=-0.5,
     sizex=0.25, sizey=0.25,
-    xanchor="left", yanchor="bottom"
+    xanchor="right", yanchor="bottom"
 )]
 
 ############### Part VI: Publish Chart ###############
