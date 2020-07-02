@@ -34,7 +34,7 @@ data = data[mask_items]
 # Provinces
 PROVS = list(data['provname'].unique())
 PROVABBS = list(data['provabb'].unique())
-PROVS_SELECTED = st.multiselect('Select Government', PROVS, default=["Canada"])
+PROVS_SELECTED = st.multiselect('Select Government', PROVS, default=["Federal government"])
 mask_provs = data['provname'].isin(PROVS_SELECTED)
 data = data[mask_provs]
 
