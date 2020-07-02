@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 @st.cache
 def importdata():
     # store the data somewhere online; there are size limits which can be an issue, but GitHub is a good option
-    return pd.read_csv("https://raw.githubusercontent.com/h3mps/t1webapp/master/fon-REAL-data.csv")
+    return pd.read_csv("https://raw.githubusercontent.com/h3mps/fonrealwebapp/master/fon-REAL-data.csv")
 
 # call function to import the data
 df = importdata()
