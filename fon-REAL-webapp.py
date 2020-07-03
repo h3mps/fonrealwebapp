@@ -18,6 +18,10 @@ df = importdata()
 # Inputs: Normalization, Item, Province
 # Once selection made, filter data so that it just includes these things
 
+# For the colour scheme
+PROVCOLS = list(df['provname'].unique())
+PROVABBS = list(df['provabb'].unique())
+
 # Normalization
 data = df[~df.normalization.str.contains("Nominal dollars")]
 NORMS = list(data['normalization'].unique())
@@ -33,7 +37,6 @@ data = data[mask_items]
 
 # Provinces
 PROVS = list(data['provname'].unique())
-PROVABBS = list(data['provabb'].unique())
 PROVS_SELECTED = st.multiselect('Select Government', PROVS, default=["All provinces and territories"])
 mask_provs = data['provname'].isin(PROVS_SELECTED)
 data = data[mask_provs]
@@ -50,7 +53,7 @@ def addlines(fig):
     # Filter the data to only include what is desired
     for p in PROVS_SELECTED:
         # Find the index of the province in the list and assign the desired colors and abbreviation to it
-        colindxp = PROVS.index(p)
+        colindxp = PROVCOLS.index(p)
         provcol = provcollist[colindxp]
         provfontcol = provfontlist[colindxp]
         provabb = PROVABBS[colindxp]
